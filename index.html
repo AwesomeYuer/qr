@@ -236,16 +236,16 @@ You can resize the QR code area to suitable for scan as below, by using mouse do
 		}
 
 		makeCode();
-		var timeId = null;
+		var timer = null;
 		var timeout = 500;
 		var alertMessage = "QR code have already been generated!\nEnjoy to scan it to your other device!\nSpecial thanks for Open Source:\n                                                    QRCode.js@davidshimjs";
 		$("#text").
 			on("blur", function () {
 				makeCode();
 				if (timeId) {
-					clearTimeout(timeId);
+					clearTimeout(timer);
 				}
-				timeId = setTimeout(function () {
+				timer = setTimeout(function () {
 					alert(alertMessage);
 				}, timeout);
 			});
@@ -253,8 +253,8 @@ You can resize the QR code area to suitable for scan as below, by using mouse do
 		$("#button").
 			on("click", function () {
 				makeCode();
-				if (timeId) {
-					clearTimeout(timeId);
+				if (timer) {
+					clearTimeout(timer);
 				}
 				timeId = setTimeout(function () {
 					alert(alertMessage);
