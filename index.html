@@ -32,9 +32,6 @@
         var $this = $(this),  
             _val = $this.val(),  
             count = "";  
-        if (_val.length > 20) {  
-            $this.val(_val.substring(0, 20));  
-        }  
         count = $this.val().length;  
         $("#text-count").text(count);  
     });  
