@@ -29,6 +29,7 @@
 <div id="qrcode" style="width:800px; height:800px; margin-top:15px; background-color:blue;"></div>
 
 <script type="text/javascript">
+    $("#text-count").text( $("#text").value.length); 
     $("#text").on("input propertychange", function() {  
         var $this = $(this),  
             _val = $this.val(),  
@@ -45,8 +46,8 @@ function makeCode () {
 	var elText = document.getElementById("text");
 	
 	if (!elText.value) {
-		alert("Input a text");
-		elText.focus();
+		// alert("Input a text");
+		// elText.focus();
 		return;
 	}
 	qrcode.makeCode(elText.value);
