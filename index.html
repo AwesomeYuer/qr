@@ -21,12 +21,23 @@
 谁解比特位
 ~ Duang ~
 </textarea>
+<span id="text-count"></span>
 &nbsp;&nbsp;
 <button id="button" accesskey="q">Generate <strong><u>Q</u></strong>R Code</button>
 <br />
 <div id="qrcode" style="width:800px; height:800px; margin-top:15px; background-color:blue;"></div>
 
 <script type="text/javascript">
+    $("#text").on("input propertychange", function() {  
+        var $this = $(this),  
+            _val = $this.val(),  
+            count = "";  
+        if (_val.length > 20) {  
+            $this.val(_val.substring(0, 20));  
+        }  
+        count = $this.val().length;  
+        $("#text-count").text(count);  
+    });  
 var qrcode = new QRCode(document.getElementById("qrcode"), {
 	width : 790,
 	height : 790
