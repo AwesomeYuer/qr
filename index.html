@@ -99,7 +99,7 @@
 
 <body id="body">
 	<center>
-		<textarea id="text" rows="5" cols="100">囍
+		<textarea id="text" rows="5" cols="100">♂㊚囍㊛♀
 满屏荒唐言
 一把辛酸泪
 都言作者痴
@@ -129,7 +129,7 @@ You can resize the QR code area to suitable for scan as below, by using mouse do
 
 	<script type="text/javascript">
 		//需要调整尺寸的div
-		let c = document.getElementById('container')
+		var c = document.getElementById('container')
 		// body监听移动事件
 		document.getElementById('body').addEventListener('mousemove', move)
 		// 鼠标按下事件
@@ -138,13 +138,13 @@ You can resize the QR code area to suitable for scan as below, by using mouse do
 		document.getElementById('body').addEventListener('mouseup', up)
 
 		// 是否开启尺寸修改
-		let resizeable = false
+		var resizeable = false
 		// 鼠标按下时的坐标，并在修改尺寸时保存上一个鼠标的位置
-		let clientX, clientY
+		var clientX, clientY
 		// div可修改的最小宽高
-		let minW = 8, minH = 8
+		var minW = 8, minH = 8
 		// 鼠标按下时的位置，使用n、s、w、e表示
-		let direc = ''
+		var direc = ''
 
 		// 鼠标松开时结束尺寸修改
 		function up() {
@@ -153,7 +153,7 @@ You can resize the QR code area to suitable for scan as below, by using mouse do
 
 		// 鼠标按下时开启尺寸修改
 		function down(e) {
-			let d = getDirection(e)
+			var d = getDirection(e)
 			// 当位置为四个边和四个角时才开启尺寸修改
 			if (d !== '') {
 				resizeable = true
@@ -166,10 +166,13 @@ You can resize the QR code area to suitable for scan as below, by using mouse do
 		// 鼠标移动事件
 		function move(e) {
 			console.log(e);
-			let d = getDirection(e)
-			let cursor
-			if (d === '') cursor = 'default';
-			else cursor = d + '-resize';
+			var d = getDirection(e)
+			var cursor
+			if (d === '') {
+				cursor = 'default';
+			} else {
+				cursor = d + '-resize';
+			}
 			// 修改鼠标显示效果
 			c.style.cursor = cursor;
 			// 当开启尺寸修改时，鼠标移动会修改div尺寸
@@ -202,15 +205,22 @@ You can resize the QR code area to suitable for scan as below, by using mouse do
 
 		// 获取鼠标所在div的位置
 		function getDirection(ev) {
-			let dir = '';
-			if (ev.target.className.indexOf('top') >= 0) dir += 'n';
-			else if (ev.target.className.indexOf('bottom') >= 0) dir += 's';
-			if (ev.target.className.indexOf('left') >= 0) dir += 'w';
-			else if (ev.target.className.indexOf('right') >= 0) dir += 'e';
+			var dir = '';
+			if (ev.target.className.indexOf('top') >= 0) {
+				dir += 'n';
+			} else if (ev.target.className.indexOf('bottom') >= 0) {
+				dir += 's';
+			}
+			if (ev.target.className.indexOf('left') >= 0) {
+				dir += 'w';
+			} else if (ev.target.className.indexOf('right') >= 0) {
+				dir += 'e';
+			}
 			return dir;
 		}
 
 		$("#text-count").text($("#text").val().length);
+
 		$("#text").on("input propertychange", function () {
 			var $this = $(this),
 				_val = $this.val(),
@@ -236,9 +246,11 @@ You can resize the QR code area to suitable for scan as below, by using mouse do
 		}
 
 		makeCode();
+
 		var timer = null;
 		var timeout = 500;
 		var alertMessage = "QR code have already been generated!\nEnjoy to scan it to your other device!\nSpecial thanks for Open Source:\n                                                    QRCode.js@davidshimjs";
+		
 		$("#text").
 			on("blur", function () {
 				makeCode();
