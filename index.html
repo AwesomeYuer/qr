@@ -110,9 +110,12 @@
 		&nbsp;&nbsp;
 		<button id="button" accesskey="q">Generate <strong><u>Q</u></strong>R Code</button>
 		<br />
+
 		<h3>
-You can resize the QR code area to suitable for scan as below, by using mouse down drag and move the 8 handles at borders and corners around the area!
+			You can resize the QR code area to suitable for scan as below, by using mouse down drag and move the 8
+			handles at borders and corners around the area!
 		</h3>
+
 		<div id="container" style="background-color:red; width: 700px; height: 700px;">
 			<div id="qrcode" class="item" style="display:flex; justify-content: center; align-items: center;">
 			</div>
@@ -199,7 +202,6 @@ You can resize the QR code area to suitable for scan as below, by using mouse do
 					c.style.width = Math.max(minW, c.offsetWidth + (clientX - e.clientX)) + 'px'
 					clientX = e.clientX
 				}
-
 			}
 		}
 
@@ -251,7 +253,7 @@ You can resize the QR code area to suitable for scan as below, by using mouse do
 		var timer = null;
 		var timeout = 500;
 		var alertMessage = "QR code have already been generated!\nEnjoy to scan it to your other device!\nSpecial thanks for Open Source:\n                                                    QRCode.js@davidshimjs";
-		
+
 		$("#text").
 			on("blur", function () {
 				makeCode();
