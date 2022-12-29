@@ -26,7 +26,7 @@
 &nbsp;&nbsp;
 <button id="button" accesskey="q">Generate <strong><u>Q</u></strong>R Code</button>
 <br />
-<div id="qrcode" style="width:800px; height:800px; margin-top:15px; background-color:red; display:flex; justify-content: center; align-items: center;">
+<div id="qrcode" style="width:700px; height:700px; margin-top:15px; background-color:red; display:flex; justify-content: center; align-items: center;">
 </div>
 </center>
 
@@ -39,10 +39,11 @@
         count = $this.val().length;  
         $("#text-count").text(count);  
     });  
-var qrcode = new QRCode(document.getElementById("qrcode"), {
-	width : 790,
-	height : 790
-});
+	var div = document.getElementById("qrcode");
+	var qrcode = new QRCode(div, {
+		width : div.clientWidth - 10,
+		height : div.clientHeight - 10
+	});
 
 function makeCode () {		
 	var elText = document.getElementById("text");
