@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="Generator" content="EditPlus®,Microshaoft">
+	<meta name="Author" content="EditPlus®,Microshaoft">
+	<meta name="Keywords" content="EditPlus®,Microshaoft">
+	<meta name="Description" content="EditPlus®,Microshaoft">
+	<title>Cross-Browser QRCode generator for Javascript</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
+	<!-- <script type="text/javascript" src="jquery.min.js"></script>
+	<script type="text/javascript" src="qrcode.js"></script> -->
+	<script type="text/javascript" src="interact.js"></script>
+	<style>
+		.resize-drag {
+			width: 120px;
+			border-radius: 8px;
+			padding: 20px;
+			margin: 1rem;
+			background-color: #29e;
+			color: white;
+			font-size: 20px;
+			font-family: sans-serif;
+
+			touch-action: none;
+
+			/* This makes things *much* easier */
+			box-sizing: border-box;
+		}
+	</style>
+</head>
+
+<body>
+	<center>
+		<textarea id="text" rows="5" cols="100">♂㊚囍㊛♀
+满屏荒唐言
+一把辛酸泪
+都言作者痴
+谁解比特位
+~ Duang ~</textarea>
+		&nbsp;&nbsp;
+		<span id="text-count"></span>
+		&nbsp;&nbsp;
+		<button id="button" accesskey="q">Generate <strong><u>Q</u></strong>R Code</button>
+		<br />
+
+		<h3>
+			You can resize the QR code area to suitable for scan as below, by using mouse down drag and move the 8
+			handles at borders and corners around the area!
+		</h3>
+
+		<div id="container" class="resize-drag">
+			<div id="qrcode" style="display:flex; justify-content: center; align-items: center;">
+				<button id="button2" accesskey="q">Generate <strong><u>Q</u></strong>R Code</button>
+			</div>
+		</div>
+
+	</center>
+
+	<script type="text/javascript">
+
+
+		interact('.resize-drag')
+			.draggable({
+				onmove: function (event) {
+							var target = event.target,
+								// keep the dragged position in the data-x/data-y attributes
+								x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx,
+								y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy;
+
+							// translate the element
+							target.style.webkitTransform =
+								target.style.transform =
+								'translate(' + x + 'px, ' + y + 'px)';
+
+							// update the posiion attributes
+							target.setAttribute('data-x', x);
+							target.setAttribute('data-y', y);
+						}
+			})
+			.resizable({
+				edges: { left: true, right: true, bottom: true, top: true }
+			})
+			.on('resizemove', function (event) {
+				var target = event.target;
+				x = (parseFloat(target.getAttribute('data-x')) || 0),
+					y = (parseFloat(target.getAttribute('data-y')) || 0);
+
+				// update the element's style
+				target.style.width = event.rect.width + 'px';
+				target.style.height = event.rect.height + 'px';
+
+				// translate when resizing from top or left edges
+				x += event.deltaRect.left;
+				y += event.deltaRect.top;
+
+				target.style.webkitTransform = target.style.transform =
+					'translate(' + x + 'px,' + y + 'px)';
+
+				target.setAttribute('data-x', x);
+				target.setAttribute('data-y', y);
+				//target.textContent = event.rect.width + '×' + event.rect.height;
+			});
+
+	</script>
+</body>

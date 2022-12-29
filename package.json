@@ -3,5 +3,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "lite-server",
     "crash": "lite-server"
+  },
+  "dependencies": {
+    "interactjs": "^1.10.17"
   }
 }
