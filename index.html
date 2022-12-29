@@ -13,6 +13,7 @@
 	<script type="text/javascript" src="qrcode.js"></script>
 </head>
 <body>
+<center>
 <textarea id="text" rows="5" cols="100">囍
 满屏荒唐言
 一把辛酸泪
@@ -25,9 +26,9 @@
 &nbsp;&nbsp;
 <button id="button" accesskey="q">Generate <strong><u>Q</u></strong>R Code</button>
 <br />
-
 <div id="qrcode" style="width:800px; height:800px; margin-top:15px; background-color:red; display:flex; justify-content: center; align-items: center;">
 </div>
+</center>
 
 <script type="text/javascript">
     $("#text-count").text( $("#text").val().length); 
@@ -57,7 +58,7 @@ function makeCode () {
 makeCode();
 var timeId = null;
 var timeout = 500; 
-var alertMessage = "Generated! Enjoy to scan it to your mobile!";
+var alertMessage = "QR code have already been generated!\nEnjoy to scan it to your other device!\nThanks QRCode.js@davidshimjs";
 $("#text").
 	on("blur", function () {
 		makeCode();
