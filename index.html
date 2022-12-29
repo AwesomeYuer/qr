@@ -57,6 +57,7 @@ function makeCode () {
 makeCode();
 var timeId = null;
 var timeout = 500; 
+var alertMessage = "Generated! Enjoy scanning!";
 $("#text").
 	on("blur", function () {
 		makeCode();
@@ -64,7 +65,7 @@ $("#text").
 			clearTimeout(timeId);
 		}
 		timeId= setTimeout(function () { 
-			alert('Generated!');
+			alert(alertMessage);
 		}, timeout);
 	});
 	
@@ -75,7 +76,7 @@ $("#button").
 			clearTimeout(timeId);
 		}
 		timeId= setTimeout(function () { 
-			alert('Generated!');
+			alert(alertMessage);
 		}, timeout);
 	});	
 </script>
