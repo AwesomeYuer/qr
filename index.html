@@ -25,7 +25,9 @@
 &nbsp;&nbsp;
 <button id="button" accesskey="q">Generate <strong><u>Q</u></strong>R Code</button>
 <br />
-<div id="qrcode" style="width:800px; height:800px; margin-top:15px; background-color:blue;"></div>
+
+<div id="qrcode" style="width:800px; height:800px; margin-top:15px; background-color:red; display:flex; justify-content: center; align-items: center;">
+</div>
 
 <script type="text/javascript">
     $("#text-count").text( $("#text").val().length); 
@@ -53,15 +55,28 @@ function makeCode () {
 }
 
 makeCode();
-
+var timeId = null;
+var timeout = 500; 
 $("#text").
 	on("blur", function () {
 		makeCode();
+		if (timeId) {
+			clearTimeout(timeId);
+		}
+		timeId= setTimeout(function () { 
+			alert('Generated!');
+		}, timeout);
 	});
 	
 $("#button").
 	on("click", function () {
 		makeCode();
+		if (timeId) {
+			clearTimeout(timeId);
+		}
+		timeId= setTimeout(function () { 
+			alert('Generated!');
+		}, timeout);
 	});	
 </script>
 </body>
