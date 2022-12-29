@@ -8,14 +8,14 @@
 <script type="text/javascript" src="qrcode.js"></script>
 </head>
 <body>
-<textarea id="text" rows="8" cols="100">
+<textarea id="text" rows="5" cols="100">
 囍
 满屏荒唐言
 一把辛酸泪
 都言作者痴
 谁解比特位
 ~ Duang ~
-</textarea>
+	</textarea><button id="button" accesskey="q"><strong><u>Q</u></strong></button>
 <br />
 <div id="qrcode" style="width:800px; height:800px; margin-top:15px; background-color:blue;"></div>
 
@@ -41,11 +41,11 @@ makeCode();
 $("#text").
 	on("blur", function () {
 		makeCode();
-	}).
-	on("keydown", function (e) {
-		if (e.keyCode == 13) {
-			makeCode();
-		}
 	});
+	
+$("#button").
+	on("click", function () {
+		makeCode();
+	});	
 </script>
 </body>
