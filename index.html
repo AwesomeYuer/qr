@@ -16,6 +16,80 @@
 	<script type="text/javascript" src="interact.js"></script>
 
 	<style>
+		.point {
+			display: none;
+		}
+
+		#container {
+			width: 200px;
+			height: 200px;
+			padding: 15px;
+			border: blue 2px solid;
+			box-sizing: border-box;
+			position: relative;
+			margin: 40px;
+			text-align: center;
+		}
+
+		#container:hover .point {
+			display: block;
+			width: 14px;
+			height: 14px;
+			/* border-radius: 1px; */
+			border: blue 2px solid;
+			background-color: yellow;
+			position: absolute;
+		}
+
+		.top {
+			top: 0px;
+			margin: auto;
+			display: block;
+			font-size: smaller;
+			font-weight: bold;
+			width: 90%;
+			height: 10px;
+			/* border-radius: 1px; */
+			/* border: blue 2px solid; */
+			/* background-color: yellow; */
+			position: absolute;
+		}
+
+		.bottom {
+			bottom: -2px;
+			left: 50%;
+		}
+
+		.left {
+			left: -2px;
+			top: 50%;
+		}
+
+		.right {
+			right: -2px;
+			top: 50%;
+		}
+
+		.top-left {
+			top: -2px;
+			left: -2px;
+		}
+
+		.bottom-left {
+			bottom: -2px;
+			left: -2px;
+		}
+
+		.top-right {
+			top: -2px;
+			right: -2px;
+		}
+
+		.bottom-right {
+			bottom: -2px;
+			right: -2px;
+		}
+
 		.item {
 			cursor: default;
 			width: 100%;
@@ -70,12 +144,45 @@
 		</h3>
 
 		<div id="container" class="resize-drag" style="width: 700px; height: 700px;">
+			<div class="top">
+				<span id="statusSpan"></span>
+			</div>
 			<div id="qrcode" class="item" style="display:flex; justify-content: center; align-items: center;">
 			</div>
+			
+			
+			
+			
+			<div class="point top-left"></div>
+			<div class="point top-right"></div>
+			<div class="point bottom-left"></div>
+			<div class="point bottom-right"></div>
 		</div>
 	</center>
 
 	<script type="text/javascript">
+		var statusSpan = document.getElementById("statusSpan");
+		var container = document.getElementById("container");
+		
+		updateStatus();
+
+		function updateStatus (e) {
+			var width;
+			var height;
+
+			if (e) {
+				width = e.rect.width;
+				height = e.rect.height;
+			} else {
+				width = container.style.width.replace("px", "");
+				height = container.style.height.replace("px", "");
+			}
+
+			var left = Math.round(container.getBoundingClientRect().left);
+			var top = Math.round(container.getBoundingClientRect().top);
+
+			statusSpan.textContent = "[" + width + ' × ' + height + "]    (" + left + ' , ' + top + ")";
+		}
 
 		interact('.resize-drag')
 			.draggable({
@@ -93,6 +200,8 @@
 					// update the posiion attributes
 					target.setAttribute('data-x', x);
 					target.setAttribute('data-y', y);
+					
+					updateStatus(event);
 				}
 			})
 			.resizable({
@@ -116,7 +225,8 @@
 
 				target.setAttribute('data-x', x);
 				target.setAttribute('data-y', y);
-				//target.textContent = event.rect.width + '×' + event.rect.height;
+				
+				updateStatus(event);
 			});
 
 		$("#text-count").text($("#text").val().length);
