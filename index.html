@@ -133,6 +133,7 @@
 		<span id="text-count"></span>
 		&nbsp;&nbsp;
 		<button id="button" accesskey="q">Generate <strong><u>Q</u></strong>R Code</button>
+		<button id="button2" accesskey="o">Restore <strong><u>O</u></strong>rininal size of QR code area</button>
 		<br />
 
 		<h3>
@@ -150,9 +151,6 @@
 			<div id="qrcode" class="item" style="display:flex; justify-content: center; align-items: center;">
 			</div>
 			
-			
-			
-			
 			<div class="point top-left"></div>
 			<div class="point top-right"></div>
 			<div class="point bottom-left"></div>
@@ -163,25 +161,32 @@
 	<script type="text/javascript">
 		var statusSpan = document.getElementById("statusSpan");
 		var container = document.getElementById("container");
+
+		var width0 = container.getBoundingClientRect().width;
+		var height0 = container.getBoundingClientRect().height;
+
+		var left0 = container.getBoundingClientRect().left;
+		var top0 = container.getBoundingClientRect().top;
+		
 		
 		updateStatus();
 
 		function updateStatus (e) {
-			var width;
-			var height;
+			var w;
+			var h;
 
 			if (e) {
-				width = e.rect.width;
-				height = e.rect.height;
+				w = e.rect.width;
+				h = e.rect.height;
 			} else {
-				width = container.style.width.replace("px", "");
-				height = container.style.height.replace("px", "");
+				w = container.style.width.replace("px", "");
+				h = container.style.height.replace("px", "");
 			}
 
-			var left = Math.round(container.getBoundingClientRect().left);
-			var top = Math.round(container.getBoundingClientRect().top);
+			var l = Math.round(container.getBoundingClientRect().left);
+			var t = Math.round(container.getBoundingClientRect().top);
 
-			statusSpan.textContent = "[" + width + ' × ' + height + "]    (" + left + ' , ' + top + ")";
+			statusSpan.textContent = "[" + w + ' × ' + h + "]    (" + l + ' , ' + t + ")";
 		}
 
 		interact('.resize-drag')
@@ -282,6 +287,15 @@
 				timeId = setTimeout(function () {
 					alert(alertMessage);
 				}, timeout);
+			});	
+		$("#button2").
+			on("click", function () {
+				// container.style.position = "absolute";
+				// container.style.left 	=  "587px";
+				// container.style.top 	=  "216px";
+				container.style.width 	= width0	+ "px";
+				container.style.height 	= height0	+ "px";
+				updateStatus();
 			});	
 	</script>
 </body>
