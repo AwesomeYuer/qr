@@ -507,7 +507,7 @@ var QRCode;
 		return replacedText.length + (replacedText.length != sText ? 3 : 0);
 	}
 	
-	/**
+	/**vOption
 	 * @class QRCode
 	 * @constructor
 	 * @example 
