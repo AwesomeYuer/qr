@@ -125,6 +125,34 @@
 
 <body id="body">
 	<center>
+		<span>ErrorCorrectionLevel:</span>
+		<select name="e">
+		  <option value="L">L(7%)</option>
+		  <option value="M" selected="selected">M(15%)</option>
+		  <option value="Q">Q(25%)</option>
+		  <option value="H">H(30%)</option>
+		</select>
+		&nbsp;&nbsp;&nbsp;&nbsp;
+		<span>TypeNumber: (changing unsupport) </span>
+		<select name="t"></select>
+		&nbsp;&nbsp;&nbsp;&nbsp;
+		<span>Mode: (changing unsupport) </span>
+		<select name="m">
+		  <option value="Numeric">Numeric</option>
+		  <option value="Alphanumeric">Alphanumeric</option>
+		  <option value="Byte" selected>Byte</option>
+		  <option value="Kanji">Kanji</option>
+		</select>
+		&nbsp;&nbsp;&nbsp;&nbsp;
+		<span>Multibyte:(changing unsupport) </span>
+		<select name="mb">
+		  <option value="default">None</option>
+		  <option value="SJIS">SJIS</option>
+		  <option value="UTF-8" selected>UTF-8</option>
+		</select>
+		<br>
+		<br>
+
 		<textarea id="text" rows="5" cols="100">♂㊚囍㊛♀
 满屏荒唐言
 一把辛酸泪
@@ -138,13 +166,10 @@
 		<button id="button2" accesskey="o">Restore <strong><u>O</u></strong>rininal size of QR code area</button>
 		<br />
 
-		<h3>
-			The QR code display area is draggable and resizeable!
-		</h3>
-
-		<h3>
-			<a href="https://awesomeyuer.github.io/qr-scanner/" target="_blank">The QR code scanner online</a>
-		</h3>
+		The QR code display area is draggable and resizeable!
+		<br>
+		<a href="https://awesomeyuer.github.io/qr-scanner/" target="_blank">The QR code scanner online</a>
+		<br>
 
 		<div id="container" class="resize-drag" style="width: 700px; height: 700px;">
 			<div class="top">
@@ -161,6 +186,33 @@
 	</center>
 
 	<script type="text/javascript">
+		var qrCodeCorrectLevelMap = [];
+		qrCodeCorrectLevelMap["L"] = QRCode.CorrectLevel.L;
+		qrCodeCorrectLevelMap["M"] = QRCode.CorrectLevel.M;
+		qrCodeCorrectLevelMap["Q"] = QRCode.CorrectLevel.Q;
+		qrCodeCorrectLevelMap["H"] = QRCode.CorrectLevel.H;
+
+
+		var crtOpt = function(value, label) {
+			var opt = document.createElement('option');
+			opt.appendChild(document.createTextNode(label) );
+			opt.value = value;
+			return opt;
+		};
+
+
+		function getSelectedCodeCorrectLevel() {
+
+			return qrCodeCorrectLevelMap[$('[name="e"] option:selected').val()];
+		}
+
+		var t = document.getElementsByName('t')[0];
+		t.appendChild(crtOpt('' + 0, 'Auto Detect') );
+		for (var i = 1; i <= 40; i += 1) {
+			t.appendChild(crtOpt('' + i, '' + i) );
+		}
+		t.value = '0';
+
 		var statusSpan = document.getElementById("statusSpan");
 		var container = document.getElementById("container");
 
@@ -170,10 +222,9 @@
 		var left0 = container.getBoundingClientRect().left;
 		var top0 = container.getBoundingClientRect().top;
 		
-		
-		updateStatus();
+		updateQRCodeSizeLocation();
 
-		function updateStatus (e) {
+		function updateQRCodeSizeLocation (e) {
 			var w;
 			var h;
 
@@ -208,7 +259,7 @@
 					target.setAttribute('data-x', x);
 					target.setAttribute('data-y', y);
 					
-					updateStatus(event);
+					updateQRCodeSizeLocation(event);
 				}
 			})
 			.resizable({
@@ -233,7 +284,7 @@
 				target.setAttribute('data-x', x);
 				target.setAttribute('data-y', y);
 				
-				updateStatus(event);
+				updateQRCodeSizeLocation(event);
 			});
 
 		$("#text-count").text($("#text").val().length);
@@ -247,11 +298,8 @@
 		});
 
 		var div = document.getElementById("qrcode");
-		var qrcode = new QRCode(div, {
-			width: div.clientWidth,
-			height: div.clientHeight
-		});
-
+		var qrcode;
+		
 		function makeCode() {
 			var elText = document.getElementById("text");
 
@@ -260,6 +308,16 @@
 				// elText.focus();
 				return;
 			}
+			if (qrcode) {
+				qrcode.clear();
+			}
+			
+			div.innerHTML = "";
+			qrcode = new QRCode(div, {
+				width: div.clientWidth,
+				height: div.clientHeight,
+				correctLevel : getSelectedCodeCorrectLevel()
+			});
 			qrcode.makeCode(elText.value);
 		}
 
@@ -268,17 +326,6 @@
 		var timer = null;
 		var timeout = 500;
 		var alertMessage = "QR code have already been generated!\nEnjoy to scan it to your other device!\nSpecial thanks for Open Source:\n        QRCode.js@davidshimjs & qrcode-generator.js@KazuhikoArase";
-
-		$("#text").
-			on("blur", function () {
-				makeCode();
-				if (timeId) {
-					clearTimeout(timer);
-				}
-				timer = setTimeout(function () {
-					alert(alertMessage);
-				}, timeout);
-			});
 
 		$("#button").
 			on("click", function () {
@@ -297,7 +344,7 @@
 				// container.style.top 	=  "216px";
 				container.style.width 	= width0	+ "px";
 				container.style.height 	= height0	+ "px";
-				updateStatus();
+				updateQRCodeSizeLocation();
 			});	
 	</script>
 </body>
