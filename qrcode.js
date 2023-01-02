@@ -374,6 +374,8 @@ var QRCode;
 		 * @param {QRCode} oQRCode 
 		 */
 		Drawing.prototype.draw = function (oQRCode) {
+
+			
             var _elImage = this._elImage;
             var _oContext = this._oContext;
             var _htOption = this._htOption;
@@ -387,9 +389,23 @@ var QRCode;
 			_elImage.style.display = "none";
 			this.clear();
 			
+			var s = "";
+			
+			for (var col = 0; col < nCount; col++) {
+				s +=  "██";
+			}
+			s +=  "████";
+			s +=  "\n";
+			
 			for (var row = 0; row < nCount; row++) {
+				s +=  "██";
 				for (var col = 0; col < nCount; col++) {
+
+
 					var bIsDark = oQRCode.isDark(row, col);
+
+					s +=  bIsDark ? "  " : "██";
+
 					var nLeft = col * nWidth;
 					var nTop = row * nHeight;
 					_oContext.strokeStyle = bIsDark ? _htOption.colorDark : _htOption.colorLight;
@@ -412,9 +428,17 @@ var QRCode;
 						nRoundedHeight
 					);
 				}
+				s += "██";
+				s += "\n";
+				
 			}
-			
+			for (var col = 0; col < nCount; col++) {
+				s +=  "██";
+			}
+			s +=  "████";
+			s += "\n";
 			this._bIsPainted = true;
+			return s;
 		};
 			
 		/**
@@ -583,8 +607,9 @@ var QRCode;
 		this._oQRCode.addData(sText);
 		this._oQRCode.make();
 		this._el.title = sText;
-		this._oDrawing.draw(this._oQRCode);			
+		var r = this._oDrawing.draw(this._oQRCode);			
 		this.makeImage();
+		return r;
 	};
 	
 	/**

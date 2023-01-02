@@ -170,8 +170,8 @@
 		<br>
 		<a href="https://awesomeyuer.github.io/qr-scanner/" target="_blank">The QR code scanner online</a>
 		<br>
-
-		<div id="container" class="resize-drag" style="width: 700px; height: 700px;">
+		<textarea id="text2" readonly rows="100" cols="200"></textarea>
+		<div id="container" class="resize-drag" style="width: 700px; height: 700px; top: 10%; left: 30%; position: absolute;">
 			<div class="top">
 				<span id="statusSpan"></span>
 			</div>
@@ -183,6 +183,7 @@
 			<div class="point bottom-left"></div>
 			<div class="point bottom-right"></div>
 		</div>
+
 	</center>
 
 	<script type="text/javascript">
@@ -192,14 +193,12 @@
 		qrCodeCorrectLevelMap["Q"] = QRCode.CorrectLevel.Q;
 		qrCodeCorrectLevelMap["H"] = QRCode.CorrectLevel.H;
 
-
 		var crtOpt = function(value, label) {
 			var opt = document.createElement('option');
 			opt.appendChild(document.createTextNode(label) );
 			opt.value = value;
 			return opt;
 		};
-
 
 		function getSelectedCodeCorrectLevel() {
 
@@ -299,6 +298,7 @@
 
 		var div = document.getElementById("qrcode");
 		var qrcode;
+		var text2 = document.getElementById("text2");
 		
 		function makeCode() {
 			var elText = document.getElementById("text");
@@ -318,7 +318,9 @@
 				height: div.clientHeight,
 				correctLevel : getSelectedCodeCorrectLevel()
 			});
-			qrcode.makeCode(elText.value);
+			var ss = qrcode.makeCode(elText.value);
+			console.log(ss);
+			text2.value = "QR Code Text (select all & copy & paste):\n" + ss;
 		}
 
 		makeCode();
