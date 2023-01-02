@@ -171,7 +171,7 @@
 		<a href="https://awesomeyuer.github.io/qr-scanner/" target="_blank">The QR code scanner online</a>
 		<br>
 		<textarea id="text2" readonly rows="100" cols="200"></textarea>
-		<div id="container" class="resize-drag" style="width: 700px; height: 700px; top: 10%; left: 30%; position: absolute;">
+		<div id="container" class="resize-drag" style="width: 700px; height: 700px; top: 12%; left: 55%; position: absolute;">
 			<div class="top">
 				<span id="statusSpan"></span>
 			</div>
@@ -238,7 +238,7 @@
 			var l = Math.round(container.getBoundingClientRect().left);
 			var t = Math.round(container.getBoundingClientRect().top);
 
-			statusSpan.textContent = "[" + w + ' × ' + h + "]    (" + l + ' , ' + t + ")";
+			statusSpan.textContent = "QR Code Image: [" + w + ' × ' + h + "]    (" + l + ' , ' + t + ")";
 		}
 
 		interact('.resize-drag')
